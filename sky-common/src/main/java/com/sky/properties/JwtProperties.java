@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "sky.jwt")
+@ConfigurationProperties(prefix = "sky.jwt")//这个是在common模块下,但是可以找server模块下的配置文件
 @Data
 public class JwtProperties {
 
