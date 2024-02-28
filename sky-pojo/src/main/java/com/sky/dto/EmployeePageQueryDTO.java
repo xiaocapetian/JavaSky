@@ -3,7 +3,7 @@ package com.sky.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-
+//分页查询DTO
 @Data
 public class EmployeePageQueryDTO implements Serializable {
 
