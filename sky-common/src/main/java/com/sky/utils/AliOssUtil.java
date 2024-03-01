@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 @Slf4j
 public class AliOssUtil {
 
+    // utils是工具类,下面的值还没初始化呢,得在写一个配置类,把一下初始化出来
     private String endpoint;
     private String accessKeyId;
     private String accessKeySecret;
@@ -60,7 +61,6 @@ public class AliOssUtil {
                 .append(endpoint)
                 .append("/")
                 .append(objectName);
-
         log.info("文件上传到:{}", stringBuilder.toString());
 
         return stringBuilder.toString();

@@ -6,3 +6,8 @@ sky:
     database: sky_take_out
     username: root
     password: qwe123
+  alioss:
+    endpoint: https://oss-cn-hangzhou.aliyuncs.com
+    bucketName: sky-takeout-xiaocapetian
+    accessKeyId: LTAI5tJ2irdd8RwgnJzoKpT4
+    accessKeySecret: nDMSiT939LUptIdgxG3JkUi91iupOY
