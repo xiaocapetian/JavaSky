@@ -3,6 +3,7 @@ package com.sky.service;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
+import com.sky.vo.DishVO;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface DishService {
     PageResult pageQuerry(DishPageQueryDTO dishPageQueryDTO);
 
     void deletebatch(List<Long> ids);
+
+    DishVO getByIdWithFlavor(Long id);
+
+    void updateWithFlavor(DishDTO dishDTO);
 }

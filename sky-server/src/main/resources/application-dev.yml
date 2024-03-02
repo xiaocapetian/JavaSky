@@ -11,3 +11,7 @@ sky:
     bucketName: sky-takeout-xiaocapetian
     accessKeyId: LTAI5tJ2irdd8RwgnJzoKpT4
     accessKeySecret: nDMSiT939LUptIdgxG3JkUi91iupOY
+  redis:
+    host:localhost
+    port:6379
+    database:0

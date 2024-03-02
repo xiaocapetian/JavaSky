@@ -49,17 +49,36 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * @return
      */
     @Bean
-    public Docket docket() {
-        log.info("准备生成接口文档...");
+    public Docket docket1() {
+        log.info("准备生成管理端接口文档...");
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("苍穹外卖项目接口文档")
                 .version("2.0")
                 .description("苍穹外卖项目接口文档")
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("管理端接口")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))//要扫描的包
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.admin"))//要扫描的包
+                //也就是说,要看哪些地方的接口呀?
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+    @Bean
+    public Docket docket2() {
+        log.info("准备生成用户端接口文档...");
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("苍穹外卖项目接口文档")
+                .version("2.0")
+                .description("苍穹外卖项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户端接口")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.user"))//要扫描的包
                 //也就是说,要看哪些地方的接口呀?
                 .paths(PathSelectors.any())
                 .build();

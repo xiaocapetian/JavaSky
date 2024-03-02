@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface DishMapper {
 
@@ -44,4 +46,9 @@ public interface DishMapper {
      */
     @Delete("delete from sky_take_out.dish where id = #{id}")
     void deleteByid(Long id);
+
+    void deleteByids(List<Long> ids);
+
+    @AutoFill(value = OperationType.INSERT)
+    void update(Dish dish);
 }
