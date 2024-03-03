@@ -5,6 +5,8 @@
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        <!-- MyBatis 将会将数据库生成的主键值设置到指定的 Java 对象的对应属性-->
+        <!-- UserMapper中void insert(User user);  传进来谁回写给谁-->
         insert into sky_take_out.user (openid, name, phone, sex, id_number, avatar, create_time)
         values (#{openid},#{name},#{phone},#{sex},#{idNumber},#{avatar},#{createTime})
     </insert>

@@ -21,4 +21,6 @@ public @interface AutoFill {
     //OperationType是自己写的枚举
 
     //写了这个后的效果是自己定的注解需要value参数,参数内容是枚举里的内容
+
+    //在切面中就会写加了这个注解会怎样AutoFillAspect
 }

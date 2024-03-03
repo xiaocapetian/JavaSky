@@ -47,8 +47,10 @@ public interface DishMapper {
     @Delete("delete from sky_take_out.dish where id = #{id}")
     void deleteByid(Long id);
 
-    void deleteByids(List<Long> ids);
+    void deleteByIds(List<Long> ids);
 
     @AutoFill(value = OperationType.INSERT)
     void update(Dish dish);
+
+    List<Dish> getByCategoryId(Dish dish);
 }

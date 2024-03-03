@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 分类管理
+ * 菜品是有分类的~
  */
 @RestController
 @RequestMapping("/admin/category")

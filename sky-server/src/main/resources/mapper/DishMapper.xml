@@ -15,7 +15,6 @@
     <update id="update">
         update sky_take_out.dish
         <set>
-            <if test="name != null">name =#{name},</if>
             <if test="categoryId != null">category_id =#{categoryId},</if>
             <if test="price != null">price =#{price},</if>
             <if test="image != null">image = #{image},</if>
@@ -26,7 +25,7 @@
         </set>
             where id = #{id}
     </update>
-    <delete id="deleteByids">
+    <delete id="deleteByIds">
         delete from sky_take_out.dish where id in
         <foreach collection="ids" separator="," open="(" close=")" item="dishId" >
             #{dishId}
@@ -41,6 +40,15 @@
             </if>
         </where>
         order by d.create_time desc
+    </select>
+    <select id="getByCategoryId" resultType="com.sky.entity.Dish">
+        select * from sky_take_out.dish 
+        <where>
+            <if test="name!= null">and name like concat('%',#{name},'%') </if>
+            <if test="categoryId!= null">and category_id = #{categoryId} </if>
+            <if test="status!= null">and status = #{status} </if>
+        </where>
+        order by create_time desc
     </select>
 
 </mapper>

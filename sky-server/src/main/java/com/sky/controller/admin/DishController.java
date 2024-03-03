@@ -1,7 +1,9 @@
 package com.sky.controller.admin;
 
+import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
@@ -70,6 +72,22 @@ public class DishController {
     public Result update(@RequestBody DishDTO dishDTO){
         log.info("修改菜品,{}",dishDTO);
         dishService.updateWithFlavor(dishDTO);
+        return Result.success();
+    }
+
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result<List<Dish>> getCatgoryById (Long catgoryId){
+        log.info("根据分类id查询菜品,{}",catgoryId);
+        List<Dish> dishList= dishService.getByCategoryId(catgoryId);
+        return Result.success(dishList);
+    }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("切换菜品开关状态")
+    public Result startOrStop(@PathVariable Integer status,Long id){
+        log.info("切换菜品开关状态为" + (status== StatusConstant.ENABLE?"开":"关"));
+        dishService.startOrStop(status,id);
         return Result.success();
     }
 }
