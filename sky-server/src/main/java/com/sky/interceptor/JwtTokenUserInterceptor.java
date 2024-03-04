@@ -52,7 +52,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
             Long userId = Long.valueOf(claims.get(JwtClaimsConstant.USER_ID).toString());
             log.info("当前用户id:{}", userId);
 
-            //存到ThreadLocal里去,BaseContext封装了ThreadLocal
+            //存到ThreadLocal里去,BaseContext是我们自己写的,封装了ThreadLocal
             BaseContext.setCurrentId(userId);
             //3、通过，放行
             return true;
