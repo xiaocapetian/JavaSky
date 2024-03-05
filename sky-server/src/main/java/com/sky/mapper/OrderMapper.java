@@ -9,6 +9,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
 
@@ -48,4 +51,18 @@ public interface OrderMapper {
 
     @Select("select count(*) from sky_take_out.orders where status = #{status}")
     Integer count(Integer status);
+
+    /**
+     * 评论区跳过支付
+     * @param orderStatus
+     * @param orderPaidStatus
+     * @param check_out_time
+     * @param orderNumber
+     */
+    @Update("update sky_take_out.orders set status = #{orderStatus},pay_status = #{orderPaidStatus} ," +
+            "checkout_time = #{check_out_time} where number = #{orderNumber}")
+    void updateStatus(Integer orderStatus, Integer orderPaidStatus, LocalDateTime check_out_time, String orderNumber);
+
+    @Select("select * from sky_take_out.orders where status = #{status} and order_time < #{time}")
+    List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime time);
 }

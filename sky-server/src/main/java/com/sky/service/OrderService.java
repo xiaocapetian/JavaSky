@@ -77,6 +77,11 @@ public interface OrderService {
      */
     void confirm(Long id);
 
+    /**
+     * 拒单
+     * @param ordersRejectionDTO
+     * @throws Exception
+     */
     void rejection(OrdersRejectionDTO ordersRejectionDTO) throws Exception;
 
     /**
@@ -91,4 +96,10 @@ public interface OrderService {
      * @param id
      */
     void delivery(Long id);
+
+    /**
+     * 客户催单
+     * @param id
+     */
+    void reminder(Long id);
 }
