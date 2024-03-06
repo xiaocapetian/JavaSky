@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -110,6 +111,7 @@ public class OrderServiceImpl implements OrderService {
                 .id(orders.getId())
                 .orderNumber(orders.getNumber())
                 .build();
+        //System.out.println(orderSubmitVO.getn);
         return orderSubmitVO;
     }
 
@@ -119,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
      * @param ordersPaymentDTO
      * @return
      */
-    public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
+    public OrderPaymentVO paymentT(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
         // 当前登录用户id
         Long userId = BaseContext.getCurrentId();
         User user = userMapper.getById(userId);
@@ -148,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
      * @param ordersPaymentDTO
      * @return
      */
-    public OrderPaymentVO paymentF(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
+    public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
         // 当前登录用户id
         String orderNumber = ordersPaymentDTO.getOrderNumber();
 
@@ -262,6 +264,10 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 再来一单
+     * @param orderid
+     */
     @Override
     public void repetition(Long orderid) {
         Long userId = BaseContext.getCurrentId();
@@ -296,12 +302,29 @@ public class OrderServiceImpl implements OrderService {
                 //orderVO的第一项是一个字符串啊,这nm也能拷贝吗,  ---不是这样的,OrderVO extends Orders 他继承了父类Orders,
                 // 所以orderVO拥有父类Orders的全部属性
                 orderVO.setOrderDishes(orderDetailList.toString());
+                String orderDishes = getOrderDishesStr(orders);
+                orderVO.setOrderDishes(orderDishes);
 
                 orderVOList.add(orderVO);
             }
         }
         return new PageResult(page.getTotal(),orderVOList);
     }
+
+    private String getOrderDishesStr(Orders orders) {
+        // 查询订单菜品详情信息（订单中的菜品和数量）
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderid(orders.getId());
+
+        // 将每一条订单菜品信息拼接为字符串（格式：宫保鸡丁*3；）
+        List<String> orderDishList = orderDetailList.stream().map(x -> {
+            String orderDish = x.getName() + "*" + x.getNumber() + ";";
+            return orderDish;
+        }).collect(Collectors.toList());
+
+        // 将该订单对应的所有菜品信息拼接在一起
+        return String.join("", orderDishList);
+    }
+
 
     /**
      * 各个状态的订单数量统计
@@ -319,10 +342,11 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 接单
-     * @param id
+     * @param ordersConfirmDTO
      */
     @Override
-    public void confirm(Long id) {
+    public void confirm(OrdersConfirmDTO ordersConfirmDTO) {
+        Long id = ordersConfirmDTO.getId();
         Orders orders = new Orders();
         orders.setId(id);
         orders.setStatus(Orders.CONFIRMED);
@@ -412,6 +436,29 @@ public class OrderServiceImpl implements OrderService {
         orders.setId(ordersDB.getId());
         // 更新订单状态,状态转为派送中
         orders.setStatus(Orders.DELIVERY_IN_PROGRESS);
+
+        orderMapper.update(orders);
+    }
+
+    /**
+     * 完成订单
+     *
+     * @param id
+     */
+    public void complete(Long id) {
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(id);
+
+        // 校验订单是否存在，并且状态为4
+        if (ordersDB == null || !ordersDB.getStatus().equals(Orders.DELIVERY_IN_PROGRESS)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Orders orders = new Orders();
+        orders.setId(ordersDB.getId());
+        // 更新订单状态,状态转为完成
+        orders.setStatus(Orders.COMPLETED);
+        orders.setDeliveryTime(LocalDateTime.now());
 
         orderMapper.update(orders);
     }

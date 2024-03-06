@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.dto.OrdersDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
@@ -11,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -53,7 +55,7 @@ public interface OrderMapper {
     Integer count(Integer status);
 
     /**
-     * 评论区跳过支付
+     * 评论区跳过支付的修改法
      * @param orderStatus
      * @param orderPaidStatus
      * @param check_out_time
@@ -65,4 +67,24 @@ public interface OrderMapper {
 
     @Select("select * from sky_take_out.orders where status = #{status} and order_time < #{time}")
     List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime time);
+
+    /**
+     * 根据map统计营业额
+     * @param map
+     * @return
+     */
+    Double sumByMap(Map map);
+
+
+    Integer countByMap(Map map);
+
+    List<Orders> getByMap(Map map);
+
+    /**
+     * 老师写的
+     * @param localDateTimeBegin
+     * @param localDateTimeEnd
+     * @return
+     */
+    List<GoodsSalesDTO> getSalesTop(LocalDateTime localDateTimeBegin,LocalDateTime localDateTimeEnd);
 }

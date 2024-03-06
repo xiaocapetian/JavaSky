@@ -75,7 +75,7 @@ public interface OrderService {
      * 接单
      * @param id
      */
-    void confirm(Long id);
+    void confirm(OrdersConfirmDTO ordersConfirmDTO);
 
     /**
      * 拒单
@@ -102,4 +102,6 @@ public interface OrderService {
      * @param id
      */
     void reminder(Long id);
+
+    void complete(Long id);
 }
