@@ -89,8 +89,10 @@
             </where>
     </select>
     <select id="getSalesTop" resultType="com.sky.dto.GoodsSalesDTO">
-        select od.name,sum(od.number) number from sky_take_out.order_detail od,sky_take_out.orders o
-        where od.order_id = o.id and o.status = 5
+        select od.name,sum(od.number) as number
+        from sky_take_out.order_detail od join sky_take_out.orders o
+        on od.order_id = o.id
+        where o.status = 5
         <if test="localDateTimeBegin!=null">and order_time &gt; #{localDateTimeBegin}</if>
         <if test="localDateTimeEnd!=null">and order_time &lt; #{localDateTimeEnd}</if>
         group by od.name
