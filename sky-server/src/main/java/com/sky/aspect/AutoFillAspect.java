@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 public class AutoFillAspect {
     /**
      * 切入点
-     * 拦截条件:com.sky.mapper.下的所有的类的所有的方法所有的参数 && 加上了注解@AutoFill
+     * 拦截条件:com.sky.mapper.下的所有的类的所有的方法所有的参数 &&且 加上了注解@AutoFill
      */
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill)")
     //对哪些类的哪些方法进行拦截
@@ -72,9 +72,10 @@ public class AutoFillAspect {
             setUpdateUser.invoke(entity,currentId);
 
         }else if(operationType == OperationType.UPDATE){
-        //为2个公共字段赋值
+            //为2个公共字段赋值
             Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
             Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
+            //通过反射为对象属性赋值
             setUpdateTime.invoke(entity,now);
             setUpdateUser.invoke(entity,currentId);
 

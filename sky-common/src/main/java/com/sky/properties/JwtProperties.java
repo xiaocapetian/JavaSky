@@ -22,5 +22,18 @@ public class JwtProperties {
     private String userSecretKey;
     private long userTtl;
     private String userTokenName;
-
+/*yml配置类就写了秘钥,过期时间(几小时),令牌名称(token)
+sky:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: itcast
+    # 设置jwt过期时间  2000小时
+    admin-ttl: 7200000000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+    # 以下是用户端的
+    user-secret-key: itheima
+    user-ttl: 7200000000
+    user-token-name: authentication
+* */
 }

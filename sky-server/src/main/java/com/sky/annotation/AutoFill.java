@@ -16,10 +16,12 @@ import java.lang.annotation.Target;
 public @interface AutoFill {
 
     OperationType value();
-    /*更新操作UPDATE,
-    插入操作INSERT* */
-    //OperationType是自己写的枚举
 
+    //OperationType是自己写的枚举
+    /*内容是
+    UPDATE,
+    INSERT
+    (更新操作,插入操作)* */
     //写了这个后的效果是自己定的注解需要value参数,参数内容是枚举里的内容
 
     //在切面中就会写加了这个注解会怎样AutoFillAspect

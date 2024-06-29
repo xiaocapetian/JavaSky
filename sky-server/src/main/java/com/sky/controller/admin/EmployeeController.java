@@ -48,11 +48,13 @@ public class EmployeeController {
         Employee employee = employeeService.login(employeeLoginDTO);
 
         //登录成功后，生成jwt令牌
-        /*创建这个map是干嘛用的*/
+        /*创建这个map是干嘛用的,这不是废话吗,jwt令牌的第2部分(数据载荷)
+        就是把一个json给base64编码封装了,现在数据载荷要放哪些内容?放empid:xxxxx*/
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
+        //常量,别被唬住了.
         String token = JwtUtil.createJWT(//生成gwt令牌
-                //需要哪些东西?加密方式,过期时间,加密对象是整个map
+                //需要哪些东西?密钥,过期时间,数据载荷map,json
                 jwtProperties.getAdminSecretKey(),
                 jwtProperties.getAdminTtl(),
                 claims);

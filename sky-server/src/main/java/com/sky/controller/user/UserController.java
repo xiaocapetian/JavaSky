@@ -43,6 +43,9 @@ public class UserController {
 
         String token = JwtUtil.createJWT(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(),
                 claims);
+        //登录的时候返回回去的   userLoginVO里就有一项叫token啊，token是jwt令牌,用封装的JwtUtil工具类创造的，
+        //创造时输入3项
+        //jwtProperties这是啥呀,这是配置属性类啊,从yml读取的常量
         UserLoginVO userLoginVO = UserLoginVO.builder()
                 .id(user.getId())
                 .openid(user.getOpenid())

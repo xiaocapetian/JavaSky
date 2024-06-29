@@ -1,5 +1,5 @@
 package com.sky.enumeration;
-
+//enumeration枚举
 /**
  * 数据库操作类型
  */

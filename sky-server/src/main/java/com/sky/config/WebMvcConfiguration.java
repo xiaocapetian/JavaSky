@@ -26,10 +26,11 @@ import java.util.List;
 /**
  * 配置类，注册web层相关组件
  */
-@Configuration
+@Configuration//配置类
 @Slf4j
+//继承WebMvcConfigurationSupport
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
-
+//注册两个拦截器
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
     @Autowired
@@ -39,9 +40,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      *
      * @param registry
      */
+    //addInterceptors什么意思?专门注册拦截器的
+    // addInterceptors是重写WebMvcConfigurationSupport里的方法
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义拦截器...");
-        registry.addInterceptor(jwtTokenAdminInterceptor)  //拦截下来干什么?进这里面看jwtTokenAdminInterceptor
+        registry.addInterceptor(jwtTokenAdminInterceptor)  //拦截下来干什么?进这个拦截器啊jwtTokenAdminInterceptor进这里面看
                 .addPathPatterns("/admin/**")                 //你要拦截什么？
                 .excludePathPatterns("/admin/employee/login");//你不拦截什么?
         registry.addInterceptor(jwtTokenUserInterceptor)
